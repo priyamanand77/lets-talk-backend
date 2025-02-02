@@ -32,22 +32,23 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public SuccessResponse addMessage(String roomId, MessageDto messageDto) {
+    public MessageDto addMessage(String roomId, MessageDto messageDto) {
         log.info(":: Inside MessageServiceImpl : method addMessage : roomId  = {} : messageDto = {}", roomId, messageDto);
         messageDto.setId(geenarteUUID());
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDateTime = now.format(formatter);
-        messageDto.setMsgTime(LocalDateTime.parse(formattedDateTime , formatter));
+        messageDto.setMsgTime(LocalDateTime.parse(formattedDateTime, formatter));
         Room chats = roomRepo.findByRoomId(roomId).orElseThrow(() -> new CustomException("Record not found", HttpStatus.NOT_FOUND));
         chats.getMessages().add(LTUtility.toEntity(messageDto, Message.class));
-        Room savedChat = roomRepo.save(chats);
-        RoomDto roomDto = LTUtility.toDto(savedChat, RoomDto.class);
-        return SuccessResponse.builder()
-                .httpStatus(HttpStatus.OK.value())
-                .message(HttpStatus.OK.name())
-                .data(roomDto)
-                .build();
+        roomRepo.save(chats);
+//        RoomDto roomDto = LTUtility.toDto(savedChat, RoomDto.class);
+//        return SuccessResponse.builder()
+//                .httpStatus(HttpStatus.OK.value())
+//                .message(HttpStatus.OK.name())
+//                .data(messageDto)
+//                .build();
+        return messageDto;
     }
 
     @Override

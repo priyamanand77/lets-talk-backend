@@ -89,7 +89,7 @@ public class RoomServiceImpl implements RoomService {
 
         log.info(":: inside RoomServiceImpl : method getRoomByRoomId : roomId : {} ", roomRepo);
         Room record = roomRepo.findByRoomId(roomId)
-                .orElseThrow(() -> new CustomException("Record Not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new CustomException("Room does not exist", HttpStatus.NOT_FOUND));
         log.info("fetched successfully : {}", record);
         RoomDto roomDto = LTUtility.toDto(record, RoomDto.class);
         return SuccessResponse.builder()
