@@ -19,4 +19,6 @@ public class MessageDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING , pattern = "dd-MM-yyyy hh:mm:ss a")
     private LocalDateTime msgTime;
     private String message;
+    private String fileName;
+    private String fileId;
 }

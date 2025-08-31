@@ -16,4 +16,6 @@ public class Message {
     private String sentBy;
     private LocalDateTime msgTime;
     private String message;
+    private String fileName;
+    private String fileId;
 }
